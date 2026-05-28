@@ -1,0 +1,9 @@
+/*.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment; filename="xuebao-assistant.apk"
+  X-Content-Type-Options: nosniff
+
+/assets/*.apk
+  Content-Type: application/vnd.android.package-archive
+  Content-Disposition: attachment; filename="snow-leopard-assistant-v3.5.2.apk"
+  X-Content-Type-Options: nosniff

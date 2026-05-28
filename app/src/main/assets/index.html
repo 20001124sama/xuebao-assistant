@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#151824" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="雪豹助手" />
+    <title>雪豹助手</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/app-icon.jpg" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="booting">
+    <section class="splash-screen" id="splashScreen" aria-label="启动动画">
+      <div class="splash-grid" aria-hidden="true"></div>
+      <div class="splash-particles" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <div class="splash-core">
+        <div class="splash-ring">
+          <img src="./icons/app-icon.jpg" alt="雪豹助手" />
+        </div>
+        <h1>雪豹助手</h1>
+        <p>由雪豹个人开发制作</p>
+        <div class="splash-progress">
+          <span></span>
+        </div>
+        <small>正在加载个人资产中枢</small>
+      </div>
+    </section>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <h1>雪豹助手</h1>
+          <p class="hero-subtitle">资产 · 收支 · 三角洲</p>
+        </div>
+        <button class="icon-button" id="exportBtn" title="备份账本" aria-label="备份账本">
+          <span aria-hidden="true">⇩</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="page active" id="pageAssets">
+          <section class="summary-grid" aria-label="资产总览">
+            <button class="metric primary" data-module="value" type="button">
+              <span>总估值</span>
+              <strong id="totalValue">¥0</strong>
+              <small id="assetCount">0 项资产 · 点击查看</small>
+            </button>
+            <button class="metric" data-module="net" type="button">
+              <span>净资产</span>
+              <strong id="netWorth">¥0</strong>
+              <small>扣除负债/贷款 · 点击查看</small>
+            </button>
+            <button class="metric warm" data-module="income" type="button">
+              <span>年收入</span>
+              <strong id="annualRent">¥0</strong>
+              <small id="yieldRate">收益率 0%</small>
+            </button>
+            <button class="metric cool" data-module="cashflow" type="button">
+              <span>月现金流</span>
+              <strong id="monthlyCashflow">¥0</strong>
+              <small>收入 - 支出 - 还款 · 点击查看</small>
+            </button>
+          </section>
+
+          <section class="toolbar" aria-label="资产工具栏">
+            <div class="search-box">
+              <span aria-hidden="true">⌕</span>
+              <input id="searchInput" type="search" placeholder="搜索名称、位置、标签、类型" autocomplete="off" />
+            </div>
+            <button class="add-button" id="newAssetBtn">新增</button>
+          </section>
+
+          <section class="tabs" id="typeTabs" aria-label="资产类型筛选"></section>
+          <section class="portfolio" id="assetList" aria-live="polite"></section>
+
+          <section class="insights">
+            <div class="section-title">
+              <h2>结构分析</h2>
+              <button class="text-button" id="structureDetailBtn" type="button">查看</button>
+            </div>
+            <p class="section-note" id="topCity">暂无数据</p>
+            <div class="bar-list" id="typeBars"></div>
+          </section>
+        </section>
+
+        <section class="page" id="pageExpenses">
+          <section class="summary-grid compact">
+            <article class="metric primary">
+              <span>本月支出</span>
+              <strong id="monthExpense">¥0</strong>
+              <small id="expenseCount">0 条记录</small>
+            </article>
+            <article class="metric">
+              <span>今日支出</span>
+              <strong id="todayExpense">¥0</strong>
+              <small>当天所有支出</small>
+            </article>
+            <article class="metric cool">
+              <span>本月结余</span>
+              <strong id="monthBalance">¥0</strong>
+              <small>本月收入 - 本月支出</small>
+            </article>
+            <article class="metric warm">
+              <span>本月收入</span>
+              <strong id="topExpense">¥0</strong>
+              <small id="topExpenseName">收入合计</small>
+            </article>
+          </section>
+          <section class="toolbar">
+            <div class="search-box">
+              <span aria-hidden="true">⌕</span>
+              <input id="expenseSearchInput" type="search" placeholder="搜索收支、分类、备注" autocomplete="off" />
+            </div>
+            <button class="add-button" id="newExpenseBtn">记一笔</button>
+          </section>
+          <section class="insights">
+            <div class="section-title">
+              <h2>收支分类</h2>
+              <button class="text-button" id="expenseClearFilterBtn" type="button">全部</button>
+            </div>
+            <p class="section-note" id="expenseFilterNote">按分类查看资金流向</p>
+            <div class="bar-list" id="expenseBars"></div>
+          </section>
+          <section class="portfolio" id="expenseList" aria-live="polite"></section>
+        </section>
+
+        <section class="page" id="pageDelta">
+          <section class="delta-hero">
+            <h2>三角洲资产</h2>
+            <p>后续可通过微信或 QQ 绑定账号，查看游戏里的仓库、货币、装备估值和资产变化。</p>
+          </section>
+          <section class="delta-actions">
+            <button class="login-card" id="wechatLoginBtn" type="button">
+              <span>微信登录</span>
+              <small>暂未开放</small>
+            </button>
+            <button class="login-card" id="qqLoginBtn" type="button">
+              <span>QQ 登录</span>
+              <small>暂未开放</small>
+            </button>
+          </section>
+          <section class="insights">
+            <div class="section-title">
+              <h2>绑定状态</h2>
+              <span class="status-badge">未连接</span>
+            </div>
+            <div class="api-list">
+              <div><span>账号绑定</span><strong id="deltaAuthStatus">暂未绑定</strong></div>
+              <div><span>游戏资产</span><strong>等待同步</strong></div>
+              <div><span>最近更新</span><strong>暂无记录</strong></div>
+            </div>
+          </section>
+        </section>
+
+        <section class="page" id="pageMe">
+          <section class="insights">
+            <div class="section-title">
+              <h2>账本工具</h2>
+              <span>本地离线</span>
+            </div>
+            <div class="tool-grid">
+              <button class="tool-card" id="exportAllBtn" type="button">
+                <strong>导出备份</strong>
+                <small>保存一份账本备份</small>
+              </button>
+              <button class="tool-card danger-soft" id="clearAllBtn" type="button">
+                <strong>清空本机数据</strong>
+                <small>不会影响安装包</small>
+              </button>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="功能导航">
+        <button class="nav-item active" data-page="assets" type="button"><span>⌂</span>资产</button>
+        <button class="nav-item" data-page="expenses" type="button"><span>￥</span>收支</button>
+        <button class="nav-item" data-page="delta" type="button"><span>△</span>三角洲</button>
+        <button class="nav-item" data-page="me" type="button"><span>☰</span>我的</button>
+      </nav>
+    </div>
+
+    <dialog class="asset-dialog" id="assetDialog">
+      <form method="dialog" id="assetForm" novalidate>
+        <div class="dialog-head">
+          <div>
+            <p class="eyebrow">资产信息</p>
+            <h2 id="dialogTitle">新增资产</h2>
+          </div>
+          <button type="button" class="icon-button" id="closeDialogBtn" aria-label="关闭">×</button>
+        </div>
+        <input type="hidden" id="assetId" />
+        <div class="form-grid">
+          <label>资产名称<input id="name" required placeholder="例如：iPhone、金饰、房产、车辆" /></label>
+          <label class="wide">类型<select id="type"></select></label>
+          <label class="wide" id="customTypeField" hidden>自定义类别<input id="customType" placeholder="输入新的资产类别" /></label>
+          <div class="type-quick-list wide" id="assetTypeQuickList" aria-label="快速切换资产类别"></div>
+          <label class="real-estate-field">所在地<input id="city" placeholder="城市" /></label>
+          <label class="real-estate-field">区域/板块<input id="district" placeholder="区域、街道、板块" /></label>
+          <label class="wide real-estate-field">详细位置<input id="address" placeholder="地址、楼栋、房号" /></label>
+          <label id="areaField">面积 m²<input id="area" type="number" min="0" step="0.01" placeholder="89.5" /></label>
+          <label>购入价<input id="purchasePrice" type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label>购入日期<input id="purchaseDate" type="date" /></label>
+          <label>当前估值<input id="currentValue" type="number" min="0" step="1" inputmode="numeric" placeholder="不填则按购入价计算" /></label>
+          <label class="real-estate-field">负债/贷款余额<input id="loanBalance" type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label class="real-estate-field">月还款<input id="mortgagePayment" type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label class="real-estate-field">月收入<input id="monthlyRent" type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label class="real-estate-field">月支出<input id="monthlyExpense" type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label class="real-estate-field">产权/租约到期<input id="ownershipEnd" type="date" /></label>
+          <label>状态<select id="status"><option>持有</option><option>出租中</option><option>使用中</option><option>闲置</option><option>待出售</option><option>维修/保养</option></select></label>
+          <label class="wide">标签<input id="tags" placeholder="核心资产, 保值, 自用, 投资" /></label>
+          <label class="wide">备注<textarea id="notes" rows="3" placeholder="记录证件、保修、租约、税费、维修、购入渠道等"></textarea></label>
+        </div>
+        <div class="dialog-actions">
+          <button type="button" class="danger" id="deleteAssetBtn">删除</button>
+          <div class="spacer"></div>
+          <button type="button" class="ghost" id="cancelBtn">取消</button>
+          <button type="submit" class="save">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="asset-dialog" id="expenseDialog">
+      <form method="dialog" id="expenseForm" novalidate>
+        <div class="dialog-head">
+          <div>
+            <p class="eyebrow">收支记录</p>
+            <h2 id="expenseDialogTitle">新增记录</h2>
+          </div>
+          <button type="button" class="icon-button" id="closeExpenseBtn" aria-label="关闭">×</button>
+        </div>
+        <input type="hidden" id="expenseId" />
+        <div class="form-grid">
+          <label>类型<select id="expenseKind"><option value="expense">支出</option><option value="income">收入</option></select></label>
+          <label>名称<input id="expenseName" required placeholder="例如：工资、餐饮、维修" /></label>
+          <label>金额<input id="expenseAmount" required type="number" min="0" step="1" inputmode="numeric" placeholder="请输入金额" /></label>
+          <label>分类<select id="expenseCategory"></select></label>
+          <label class="wide" id="customExpenseCategoryField" hidden>自定义分类<input id="customExpenseCategory" placeholder="输入新的开支分类" /></label>
+          <div class="type-quick-list wide" id="expenseCategoryQuickList" aria-label="快速切换开支分类"></div>
+          <label>日期<input id="expenseDate" type="date" /></label>
+          <label>支付方式<select id="expenseMethod"><option>微信</option><option>支付宝</option><option>银行卡</option><option>现金</option><option>其他</option></select></label>
+          <label>关联资产<input id="expenseAssetRef" list="assetNames" placeholder="可选" /><datalist id="assetNames"></datalist></label>
+          <label class="wide">备注<textarea id="expenseNotes" rows="3" placeholder="记录用途、票据、周期性费用等"></textarea></label>
+        </div>
+        <div class="dialog-actions">
+          <button type="button" class="danger" id="deleteExpenseBtn">删除</button>
+          <div class="spacer"></div>
+          <button type="button" class="ghost" id="cancelExpenseBtn">取消</button>
+          <button type="submit" class="save">保存</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="asset-dialog" id="detailDialog">
+      <div class="detail-panel">
+        <div class="dialog-head">
+          <div>
+            <p class="eyebrow" id="detailEyebrow">详情</p>
+            <h2 id="detailTitle">详情</h2>
+          </div>
+          <button type="button" class="icon-button" id="closeDetailBtn" aria-label="关闭">×</button>
+        </div>
+        <div id="detailContent"></div>
+        <div class="dialog-actions">
+          <button type="button" class="ghost" id="detailCloseAction">关闭</button>
+          <div class="spacer"></div>
+          <button type="button" class="save" id="detailEditBtn">编辑</button>
+        </div>
+      </div>
+    </dialog>
+
+    <template id="assetTemplate">
+      <article class="asset-card">
+        <div class="asset-main">
+          <div class="asset-topline"><span class="type-pill"></span><span class="status-dot"></span></div>
+          <h3></h3>
+          <p class="address"></p>
+          <div class="asset-numbers">
+            <span><small>估值</small><strong class="value"></strong></span>
+            <span><small>净值</small><strong class="equity"></strong></span>
+            <span><small>月流</small><strong class="cashflow"></strong></span>
+          </div>
+          <div class="asset-foot"><span class="rent"></span><span class="area"></span></div>
+          <div class="card-actions"><button type="button" class="ghost view-asset">查看</button><button type="button" class="save edit-asset">编辑</button></div>
+        </div>
+      </article>
+    </template>
+
+    <template id="expenseTemplate">
+      <article class="asset-card expense-card">
+        <div class="asset-main">
+          <div class="asset-topline"><span class="type-pill category"></span><span class="expense-date"></span></div>
+          <h3></h3>
+          <p class="address expense-note"></p>
+          <div class="asset-foot"><strong class="expense-amount"></strong><span class="expense-method"></span></div>
+          <div class="card-actions"><button type="button" class="ghost view-expense">查看</button><button type="button" class="save edit-expense">编辑</button></div>
+        </div>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+.gradle/
+**/build/
+local.properties
+*.iml
+.idea/
+_deploy_verify/
+_deploy_verify2/
+_github_upload/
+雪豹助手-full-project-github.zip
+*.tmp

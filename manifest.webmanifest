@@ -1,0 +1,19 @@
+{
+  "name": "雪豹助手",
+  "short_name": "雪豹助手",
+  "description": "用于记录资产、开支和游戏资产状态的离线助手。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f8f5",
+  "theme_color": "#151824",
+  "icons": [
+    {
+      "src": "./icons/app-icon.jpg",
+      "sizes": "1024x1024",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
